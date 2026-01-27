@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+  <key>name</key>
+  <string>Coolnight</string>
+  <key>author</key>
+  <string>maxchene</string>
+  <key>settings</key>
+  <array>
+    <!-- Default background/foreground -->
+    <dict>
+      <key>settings</key>
+      <dict>
+        <key>background</key>
+        <string>#011423</string>
+        <key>foreground</key>
+        <string>#CBE0F0</string>
+        <key>caret</key>
+        <string>#47FF9C</string>
+        <key>lineHighlight</key>
+        <string>#21496933</string>
+        <key>selection</key>
+        <string>#214969</string>
+      </dict>
+    </dict>
+
+    <!-- Comments -->
+    <dict>
+      <key>name</key>
+      <string>Comment</string>
+      <key>scope</key>
+      <string>comment, punctuation.definition.comment</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#214969</string>
+        <key>fontStyle</key>
+        <string>italic</string>
+      </dict>
+    </dict>
+
+    <!-- Strings -->
+    <dict>
+      <key>name</key>
+      <string>String</string>
+      <key>scope</key>
+      <string>string, constant.character, constant.other.symbol</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#44FFB1</string>
+      </dict>
+    </dict>
+
+    <!-- Numbers / Constants -->
+    <dict>
+      <key>name</key>
+      <string>Number / Constant</string>
+      <key>scope</key>
+      <string>constant.numeric, constant.language, variable.other.constant</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#FFE073</string>
+      </dict>
+    </dict>
+
+    <!-- Keywords -->
+    <dict>
+      <key>name</key>
+      <string>Keyword</string>
+      <key>scope</key>
+      <string>keyword, storage.type, storage.modifier</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#A277FF</string>
+      </dict>
+    </dict>
+
+    <!-- Functions / Methods -->
+    <dict>
+      <key>name</key>
+      <string>Function / Method</string>
+      <key>scope</key>
+      <string>entity.name.function, meta.function-call</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#0FC5ED</string>
+      </dict>
+    </dict>
+
+    <!-- Variables -->
+    <dict>
+      <key>name</key>
+      <string>Variable</string>
+      <key>scope</key>
+      <string>variable, meta.definition.variable</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#CBE0F0</string>
+      </dict>
+    </dict>
+
+    <!-- Types -->
+    <dict>
+      <key>name</key>
+      <string>Type / Class</string>
+      <key>scope</key>
+      <string>support.type, entity.name.type, entity.name.class</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#24EAF7</string>
+      </dict>
+    </dict>
+
+    <!-- Operators -->
+    <dict>
+      <key>name</key>
+      <string>Operator / Punctuation</string>
+      <key>scope</key>
+      <string>keyword.operator, punctuation, punctuation.separator, punctuation.definition</string>
+      <key>settings</key>
+      <dict>
+        <key>foreground</key>
+        <string>#FFE073</string>
+      </dict>
+    </dict>
+
+    <!-- ANSI Colors for bat -->
+    <dict>
+      <key>name</key>
+      <string>ANSI Colors</string>
+      <key>scope</key>
+      <string>constant.other.color</string>
+      <key>settings</key>
+      <dict>
+        <key>black</key>
+        <string>#214969</string>
+        <key>red</key>
+        <string>#E52E2E</string>
+        <key>green</key>
+        <string>#44FFB1</string>
+        <key>yellow</key>
+        <string>#FFE073</string>
+        <key>blue</key>
+        <string>#0FC5ED</string>
+        <key>magenta</key>
+        <string>#A277FF</string>
+        <key>cyan</key>
+        <string>#24EAF7</string>
+        <key>white</key>
+        <string>#CBE0F0</string>
+        <key>brightBlack</key>
+        <string>#214969</string>
+        <key>brightRed</key>
+        <string>#E52E2E</string>
+        <key>brightGreen</key>
+        <string>#44FFB1</string>
+        <key>brightYellow</key>
+        <string>#FFE073</string>
+        <key>brightBlue</key>
+        <string>#A277FF</string>
+        <key>brightMagenta</key>
+        <string>#A277FF</string>
+        <key>brightCyan</key>
+        <string>#24EAF7</string>
+        <key>brightWhite</key>
+        <string>#24EAF7</string>
+      </dict>
+    </dict>
+  </array>
+</dict>
+</plist>
+
