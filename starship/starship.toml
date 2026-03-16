@@ -1,5 +1,5 @@
 # Use custom format:
-format="$directory$git_branch$character"
+format = """$directory$character"""
 
 # Prompt symbols 
 [character]
