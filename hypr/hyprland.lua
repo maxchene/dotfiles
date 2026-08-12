@@ -30,7 +30,7 @@ hl.config({
 -- a Lua file (e.g. home-monitors.lua) containing hl.monitor({...}) calls.
 -- You'll need to convert that file too (rename it and swap its `monitor=`
 -- lines for hl.monitor({...}) calls), then uncomment the line below.
-require("monitors/home")
+require("monitors/dual")
 
 ---------------------
 ---- MY PROGRAMS ----
