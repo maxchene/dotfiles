@@ -251,7 +251,13 @@ hl.bind("PRINT", hl.dsp.exec_cmd("hyprshot -m window"))
 hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("hyprshot -m region"))
 hl.bind(mainMod .. " + F5", hl.dsp.exec_cmd("wpaperctl next-wallpaper"))
 
-hl.bind(mainMod .. " + F12", hl.dsp.exec_cmd("hyprctl dispatch dpms off && sleep 1 && hyprctl dispatch dpms on")) -- reload screens
+hl.bind(mainMod .. " + F12", function()
+    hl.dispatch(hl.dsp.dpms({ action = "disable" }))
+    hl.timer(function()
+        hl.dispatch(hl.dsp.dpms({ action = "enable" }))
+    end, { timeout = 1000, type = "oneshot" })
+end)
+
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
