@@ -10,12 +10,12 @@
 -- require("myColors")
 
 hl.config({
-    ecosystem = {
-        no_update_news = true,
-    },
-    cursor = {
-        no_hardware_cursors = true,
-    },
+	ecosystem = {
+		no_update_news = true,
+	},
+	cursor = {
+		no_hardware_cursors = true,
+	},
 })
 
 ------------------
@@ -52,13 +52,13 @@ local calculator = "gnome-calculator"
 -- Or execute your favorite apps at launch like this:
 
 hl.on("hyprland.start", function()
-    -- hl.exec_cmd(terminal)
-    hl.exec_cmd("nm-applet &")
-    -- hl.exec_cmd("waybar & hyprpaper & firefox")
-    hl.exec_cmd("waybar & wpaperd -d & hypridle & swaync & systemctl --user start hyprpolkitagent")
-    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
-    hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
-    hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
+	-- hl.exec_cmd(terminal)
+	hl.exec_cmd("nm-applet &")
+	-- hl.exec_cmd("waybar & hyprpaper & firefox")
+	hl.exec_cmd("waybar & wpaperd -d & hypridle & swaync & systemctl --user start hyprpolkitagent")
+	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+	hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
+	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
 end)
 
 -------------------------------
@@ -77,52 +77,52 @@ hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
-    general = {
-        gaps_in = 5,
-        gaps_out = 20,
+	general = {
+		gaps_in = 5,
+		gaps_out = 20,
 
-        border_size = 2,
+		border_size = 2,
 
-        col = {
-            active_border = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
-            inactive_border = "rgba(595959aa)",
-        },
+		col = {
+			active_border = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
+			inactive_border = "rgba(595959aa)",
+		},
 
-        -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
-        resize_on_border = false,
+		-- Set to true to enable resizing windows by clicking and dragging on borders and gaps
+		resize_on_border = false,
 
-        -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
-        allow_tearing = false,
+		-- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
+		allow_tearing = false,
 
-        layout = "dwindle",
-    },
+		layout = "dwindle",
+	},
 
-    decoration = {
-        rounding = 10,
+	decoration = {
+		rounding = 10,
 
-        -- Change transparency of focused and unfocused windows
-        active_opacity = 1.0,
-        inactive_opacity = 1.0,
+		-- Change transparency of focused and unfocused windows
+		active_opacity = 1.0,
+		inactive_opacity = 1.0,
 
-        shadow = {
-            enabled = true,
-            range = 4,
-            render_power = 3,
-            color = "rgba(1a1a1aee)",
-        },
+		shadow = {
+			enabled = true,
+			range = 4,
+			render_power = 3,
+			color = "rgba(1a1a1aee)",
+		},
 
-        -- See https://wiki.hypr.land/Configuring/Basics/Variables/#blur
-        blur = {
-            enabled = true,
-            size = 3,
-            passes = 1,
-            vibrancy = 0.1696,
-        },
-    },
+		-- See https://wiki.hypr.land/Configuring/Basics/Variables/#blur
+		blur = {
+			enabled = true,
+			size = 3,
+			passes = 1,
+			vibrancy = 0.1696,
+		},
+	},
 
-    animations = {
-        enabled = true,
-    },
+	animations = {
+		enabled = true,
+	},
 })
 
 -- Default curves, see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/ for more
@@ -169,16 +169,16 @@ hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "a
 
 -- See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/ for more
 hl.config({
-    dwindle = {
-        preserve_split = true, -- You probably want this
-    },
+	dwindle = {
+		preserve_split = true, -- You probably want this
+	},
 })
 
 -- See https://wiki.hypr.land/Configuring/Layouts/Master-Layout/ for more
 hl.config({
-    master = {
-        new_status = "master",
-    },
+	master = {
+		new_status = "master",
+	},
 })
 
 ----------------
@@ -186,13 +186,13 @@ hl.config({
 ----------------
 
 hl.config({
-    misc = {
-        force_default_wallpaper = -1, -- Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo = false, -- If true disables the random hyprland logo / anime girl background. :(
-    },
-    debug = {
-        disable_logs = false,
-    },
+	misc = {
+		force_default_wallpaper = -1, -- Set to 0 or 1 to disable the anime mascot wallpapers
+		disable_hyprland_logo = false, -- If true disables the random hyprland logo / anime girl background. :(
+	},
+	debug = {
+		disable_logs = false,
+	},
 })
 
 ---------------
@@ -200,21 +200,21 @@ hl.config({
 ---------------
 
 hl.config({
-    input = {
-        kb_layout = "fr",
-        kb_variant = "",
-        kb_model = "",
-        kb_options = "",
-        kb_rules = "",
+	input = {
+		kb_layout = "fr",
+		kb_variant = "",
+		kb_model = "",
+		kb_options = "",
+		kb_rules = "",
 
-        follow_mouse = 1,
+		follow_mouse = 1,
 
-        sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
+		sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
 
-        touchpad = {
-            natural_scroll = false,
-        },
-    },
+		touchpad = {
+			natural_scroll = false,
+		},
+	},
 })
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Gestures/
@@ -223,9 +223,9 @@ hl.config({
 -- Example per-device config
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Devices/ for more
 hl.device({
-    name = "logitech-g305-1",
-    sensitivity = 0.0,
-    accel_profile = "flat",
+	name = "logitech-g305-1",
+	sensitivity = 0.0,
+	accel_profile = "flat",
 })
 
 ---------------------
@@ -252,12 +252,11 @@ hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("hyprshot -m region"))
 hl.bind(mainMod .. " + F5", hl.dsp.exec_cmd("wpaperctl next-wallpaper"))
 
 hl.bind(mainMod .. " + F12", function()
-    hl.dispatch(hl.dsp.dpms({ action = "disable" }))
-    hl.timer(function()
-        hl.dispatch(hl.dsp.dpms({ action = "enable" }))
-    end, { timeout = 1000, type = "oneshot" })
+	hl.dispatch(hl.dsp.dpms({ action = "disable" }))
+	hl.timer(function()
+		hl.dispatch(hl.dsp.dpms({ action = "enable" }))
+	end, { timeout = 1000, type = "oneshot" })
 end)
-
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -307,10 +306,26 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
+hl.bind(
+	"XF86AudioRaiseVolume",
+	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"),
+	{ locked = true, repeating = true }
+)
+hl.bind(
+	"XF86AudioLowerVolume",
+	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
+	{ locked = true, repeating = true }
+)
+hl.bind(
+	"XF86AudioMute",
+	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
+	{ locked = true, repeating = true }
+)
+hl.bind(
+	"XF86AudioMicMute",
+	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
+	{ locked = true, repeating = true }
+)
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 10%+"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 10%-"), { locked = true, repeating = true })
 
