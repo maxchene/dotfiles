@@ -251,11 +251,42 @@ hl.bind("PRINT", hl.dsp.exec_cmd("hyprshot -m window"))
 hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("hyprshot -m region"))
 hl.bind(mainMod .. " + F5", hl.dsp.exec_cmd("wpaperctl next-wallpaper"))
 
-hl.bind(mainMod .. " + F12", function()
+-- Réapplique les règles moniteur et relance le rendu sans éteindre les écrans.
+-- Répare un écran resté noir (rétroéclairage allumé, image noire) : les DP du
+-- dock sont sur la NVIDIA (secondaire), le rendu Intel y est copié et cette
+-- copie se perd parfois au hotplug ou après un cycle dpms.
+-- Trace visible dans le log Hyprland : "[Lua] [monitors] force_renderer_reload".
+local function reload_renderer()
+	print("[monitors] force_renderer_reload")
+	hl.dispatch(hl.dsp.force_renderer_reload())
+end
+
+-- Éteint puis rallume tous les écrans (dpms), ce qui force un nouveau modeset
+-- DRM, puis relance le rendu 1,5 s après pour fiabiliser le réveil.
+local function power_cycle_monitors()
 	hl.dispatch(hl.dsp.dpms({ action = "disable" }))
 	hl.timer(function()
 		hl.dispatch(hl.dsp.dpms({ action = "enable" }))
+		hl.timer(reload_renderer, { timeout = 1500, type = "oneshot" })
 	end, { timeout = 1000, type = "oneshot" })
+end
+
+hl.bind(mainMod .. " + F12", power_cycle_monitors)
+
+-- Au hotplug (dock), un commit DRM est parfois perdu ("Cannot commit when a
+-- page-flip is awaiting") et un écran reste noir. On relance le rendu
+-- automatiquement 2 s après le dernier écran ajouté (debounce : DP-3 et DP-4
+-- arrivent à quelques centaines de ms d'écart, on ne veut qu'un seul reload).
+local hotplug_generation = 0
+hl.on("monitor.added", function()
+	hotplug_generation = hotplug_generation + 1
+	local generation = hotplug_generation
+	hl.timer(function()
+		if generation ~= hotplug_generation then
+			return -- un autre écran est arrivé entre-temps, on laisse le dernier timer agir
+		end
+		reload_renderer()
+	end, { timeout = 2000, type = "oneshot" })
 end)
 
 -- Move focus with mainMod + arrow keys
