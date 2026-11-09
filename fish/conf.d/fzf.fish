@@ -1,0 +1,11 @@
+fzf --fish | source
+set fg "#CBE0F0"
+set bg "#1a1b26"
+set purple "#B388FF"
+set blue "#06BCE4"
+set cyan "#2CF9ED"
+set orange "#ff9e64"
+set green "#c3e88d"
+set -gx FZF_DEFAULT_OPTS "--layout=reverse --color=fg:$fg,bg:$bg,hl:$purple,fg+:$fg,bg+:$bg,hl+:$purple,prompt:$cyan,pointer:$cyan,marker:$cyan,spinner:$cyan,header:$cyan,info:$green"
+set -gx FZF_CTRL_T_OPTS "--preview 'bat -n --color=always --line-range :500 {}'"
+set -gx FZF_ALT_C_OPTS "--preview 'eza --tree --color=always {} | head -200'"
