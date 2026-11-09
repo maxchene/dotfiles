@@ -190,7 +190,7 @@
   },
   "bluetooth": {
     "format": " {status}",
-    "on-click": "hyprctl dispatch exec '[float; size 900 600; center] kitty bluetui'",
+    "on-click": "hyprctl dispatch 'hl.dsp.exec_cmd(\"kitty bluetui\", { float = true, size = { 900, 600 }, center = true })'",
     "format-connected": " {device_alias}",
     "format-connected-battery": " {device_alias} {device_battery_percentage}%",
     "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
