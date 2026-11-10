@@ -261,17 +261,41 @@ local function reload_renderer()
 	hl.dispatch(hl.dsp.force_renderer_reload())
 end
 
--- Éteint puis rallume tous les écrans (dpms), ce qui force un nouveau modeset
--- DRM, puis relance le rendu 1,5 s après pour fiabiliser le réveil.
+-- Cycle dpms complet (off -> on -> reload du rendu), pour forcer un nouveau
+-- modeset DRM quand le simple reload ne suffit pas.
+--
+-- Pourquoi ces délais et ce verrou : "dpms off" ne coupe pas l'écran tout de
+-- suite, Hyprland joue d'abord le fondu au noir (anim "fade", ~330 ms) puis
+-- commit la désactivation. Si le "dpms on" arrive trop tôt, ou si on relance
+-- un modeset (force_renderer_reload) pendant que le page-flip du réveil est
+-- encore en attente, le backend DRM NVIDIA refuse le commit ("Cannot commit
+-- when a page-flip is awaiting") et l'écran reste noir / Hyprland semble figé.
+-- Un second appui pendant le cycle empile des timers et aggrave le problème,
+-- d'où le verrou `dpms_cycle_running`.
+local dpms_cycle_running = false
+
 local function power_cycle_monitors()
+	if dpms_cycle_running then
+		print("[monitors] dpms cycle déjà en cours, appui ignoré")
+		return
+	end
+	dpms_cycle_running = true
+	print("[monitors] dpms cycle: off")
 	hl.dispatch(hl.dsp.dpms({ action = "disable" }))
 	hl.timer(function()
+		print("[monitors] dpms cycle: on")
 		hl.dispatch(hl.dsp.dpms({ action = "enable" }))
-		hl.timer(reload_renderer, { timeout = 1500, type = "oneshot" })
-	end, { timeout = 1000, type = "oneshot" })
+		hl.timer(function()
+			reload_renderer()
+			dpms_cycle_running = false
+		end, { timeout = 3000, type = "oneshot" })
+	end, { timeout = 2000, type = "oneshot" })
 end
 
-hl.bind(mainMod .. " + F12", power_cycle_monitors)
+-- SUPER+F12 : reload du rendu seul (sans éteindre les écrans), c'est ce qui
+-- répare un écran noir au hotplug. SUPER+SHIFT+F12 : cycle dpms complet.
+hl.bind(mainMod .. " + F12", reload_renderer)
+hl.bind(mainMod .. " + SHIFT + F12", power_cycle_monitors)
 
 -- Au hotplug (dock), un commit DRM est parfois perdu ("Cannot commit when a
 -- page-flip is awaiting") et un écran reste noir. On relance le rendu
