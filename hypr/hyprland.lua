@@ -261,8 +261,17 @@ local function reload_renderer()
 	hl.dispatch(hl.dsp.force_renderer_reload())
 end
 
--- Cycle dpms complet (off -> on -> reload du rendu), pour forcer un nouveau
--- modeset DRM quand le simple reload ne suffit pas.
+-- Cycle dpms complet, un écran après l'autre (off -> on, puis écran suivant,
+-- puis reload du rendu), pour forcer un nouveau modeset DRM quand le simple
+-- reload ne suffit pas.
+--
+-- Pourquoi un écran à la fois : en coupant les deux ensemble, la NVIDIA n'a
+-- plus aucune sortie active, aquamarine détruit le renderer secondaire puis
+-- doit le recréer pendant que les deux liens DP du dock se renégocient en
+-- même temps, et il arrive qu'un des deux Dell reste en "pas de signal" alors
+-- que Hyprland le croit allumé (rien dans le log, d'où l'absence de
+-- vérification possible). Séquentiel = un seul modeset à la fois, l'autre
+-- écran garde le renderer en vie.
 --
 -- Pourquoi ces délais et ce verrou : "dpms off" ne coupe pas l'écran tout de
 -- suite, Hyprland joue d'abord le fondu au noir (anim "fade", ~330 ms) puis
@@ -280,16 +289,62 @@ local function power_cycle_monitors()
 		return
 	end
 	dpms_cycle_running = true
-	print("[monitors] dpms cycle: off")
-	hl.dispatch(hl.dsp.dpms({ action = "disable" }))
-	hl.timer(function()
-		print("[monitors] dpms cycle: on")
-		hl.dispatch(hl.dsp.dpms({ action = "enable" }))
-		hl.timer(function()
+
+	local names = {}
+	for _, m in ipairs(hl.get_monitors()) do
+		if m.enabled then
+			names[#names + 1] = m.name
+		end
+	end
+
+	local function cycle(i)
+		local name = names[i]
+		if not name then
+			-- filet de sécurité : tout rallumer, puis relancer le rendu
+			hl.dispatch(hl.dsp.dpms({ action = "enable" }))
 			reload_renderer()
 			dpms_cycle_running = false
-		end, { timeout = 3000, type = "oneshot" })
-	end, { timeout = 2000, type = "oneshot" })
+			return
+		end
+		print("[monitors] dpms cycle: off " .. name)
+		hl.dispatch(hl.dsp.dpms({ action = "disable", monitor = name }))
+		hl.timer(function()
+			print("[monitors] dpms cycle: on " .. name)
+			hl.dispatch(hl.dsp.dpms({ action = "enable", monitor = name }))
+			hl.timer(function()
+				cycle(i + 1)
+			end, { timeout = 3000, type = "oneshot" })
+		end, { timeout = 2000, type = "oneshot" })
+	end
+	cycle(1)
+end
+
+-- Appelées par hypridle via `hyprctl eval` (voir hypridle.conf), d'où les
+-- globales. En config Lua, `hyprctl dispatch dpms on` (ancienne syntaxe)
+-- échoue : sans ça, rien ne rallume ni ne répare les écrans au réveil.
+--
+-- monitors_wake : retour d'activité après l'extinction dpms de hypridle.
+-- On rallume puis on relance le rendu, la copie Intel -> NVIDIA se perdant
+-- parfois après un cycle dpms (écran noir, puis veille "pas de signal").
+function monitors_wake()
+	if dpms_cycle_running then
+		return
+	end
+	dpms_cycle_running = true
+	print("[monitors] wake: dpms on")
+	hl.dispatch(hl.dsp.dpms({ action = "enable" }))
+	hl.timer(function()
+		reload_renderer()
+		dpms_cycle_running = false
+	end, { timeout = 3000, type = "oneshot" })
+end
+
+-- monitors_resume : sortie de veille système (suspend). Le simple reload ne
+-- suffit pas toujours, on rejoue le cycle complet une fois la session DRM
+-- réactivée (d'où le délai).
+function monitors_resume()
+	print("[monitors] resume: cycle dpms dans 3 s")
+	hl.timer(power_cycle_monitors, { timeout = 3000, type = "oneshot" })
 end
 
 -- SUPER+F12 : reload du rendu seul (sans éteindre les écrans), c'est ce qui
