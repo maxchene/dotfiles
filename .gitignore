@@ -1,2 +1,6 @@
 # fish runtime state (universal vars, tide prompt cache); never commit
 fish/fish_variables
+
+# spicetify: third-party apps/extensions installed via marketplace
+spicetify/CustomApps/
+spicetify/Extensions/

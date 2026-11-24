@@ -30,7 +30,7 @@ hl.config({
 -- a Lua file (e.g. home-monitors.lua) containing hl.monitor({...}) calls.
 -- You'll need to convert that file too (rename it and swap its `monitor=`
 -- lines for hl.monitor({...}) calls), then uncomment the line below.
-require("monitors/atlantic")
+require("monitors/dual")
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -412,3 +412,6 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 --     match = { class = "^$", title = "^$", xwayland = true, float = true, fullscreen = false, pin = false },
 --     no_focus = true,
 -- })
+
+-- Spotify: slightly translucent window (whole window, blurred by decoration.blur)
+hl.window_rule({ name = "spotify-opacity", match = { class = "^(Spotify)$" }, opacity = "0.9 0.9" })
